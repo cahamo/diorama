@@ -24,7 +24,7 @@
 #include "handset-test.h"
 
 #define IRSensorPin 2
-#define FeedbackLEDPin 3
+#define FeedbackLEDPin 9
 
 void reportKey(String s) {
   Serial.print("Key pressed: ");
@@ -41,80 +41,79 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if (IrReceiver.decode()) {
-    IrReceiver.resume(); // Resume listening to sensor while current readings are processed
+  if (! IrReceiver.decode()) {
+    return;
+  }
+  IrReceiver.resume(); // Resume listening to sensor while current readings are processed
 
-    // Check if this is an NEC handset - assume it's the one we're using for diorama
-    if (IrReceiver.decodedIRData.protocol == NEC) {
+  // Check if this is an NEC handset - assume it's the one we're using for diorama
+  if (IrReceiver.decodedIRData.protocol != NEC) {
+    return;
+  }
 
-      // Interpret which key was pressed
-      switch(IrReceiver.decodedIRData.command) {
-        case REMOTE_KEY_0: 
-          reportKey("0");
-          break;
-        case REMOTE_KEY_1: 
-          reportKey("1");
-          break;
-        case REMOTE_KEY_2: 
-          reportKey("2");
-          break;
-        case REMOTE_KEY_3: 
-          reportKey("3");
-          break;
-        case REMOTE_KEY_4: 
-          reportKey("4");
-          break;
-        case REMOTE_KEY_5: 
-          reportKey("5");
-          break;
-        case REMOTE_KEY_6: 
-          reportKey("6");
-          break;
-        case REMOTE_KEY_7: 
-          reportKey("7");
-          break;
-        case REMOTE_KEY_8: 
-          reportKey("8");
-          break;
-        case REMOTE_KEY_9: 
-          reportKey("9");
-          break;
-        case REMOTE_KEY_STAR:
-          reportKey("*");
-          break;
-        case REMOTE_KEY_HASH:
-          reportKey("#");
-          break;
-        case REMOTE_KEY_UP:
-          reportKey("Up-Arrow");
-          break;
-        case REMOTE_KEY_DOWN:
-          reportKey("Down-Arrow");
-          break;
-        case REMOTE_KEY_LEFT:
-          reportKey("Left-Arrow");
-          break;
-        case REMOTE_KEY_RIGHT:
-          reportKey("Right-Arrow");
-          break;
-        case REMOTE_KEY_OK:
-          reportKey("OK");
-          break;
-        default:
-          reportKey("@@@ Unknown key press");
-          break;
-      }
-      
-      // Check if key is repeating
-      if (IrReceiver.decodedIRData.flags & IRDATA_FLAGS_IS_REPEAT) {
-        Serial.println(" - repeat");
-      }
-      else {
-        Serial.println();
-      }
-    }
-    else
-      // Dunno what this is, but it's not our handset
-      Serial.println("@@@ Unknown protocol");  
+  // Interpret which key was pressed
+  switch(IrReceiver.decodedIRData.command) {
+    case REMOTE_KEY_0: 
+      reportKey("0");
+      break;
+    case REMOTE_KEY_1: 
+      reportKey("1");
+      break;
+    case REMOTE_KEY_2: 
+      reportKey("2");
+      break;
+    case REMOTE_KEY_3: 
+      reportKey("3");
+      break;
+    case REMOTE_KEY_4: 
+      reportKey("4");
+      break;
+    case REMOTE_KEY_5: 
+      reportKey("5");
+      break;
+    case REMOTE_KEY_6: 
+      reportKey("6");
+      break;
+    case REMOTE_KEY_7: 
+      reportKey("7");
+      break;
+    case REMOTE_KEY_8: 
+      reportKey("8");
+      break;
+    case REMOTE_KEY_9: 
+      reportKey("9");
+      break;
+    case REMOTE_KEY_STAR:
+      reportKey("*");
+      break;
+    case REMOTE_KEY_HASH:
+      reportKey("#");
+      break;
+    case REMOTE_KEY_UP:
+      reportKey("Up-Arrow");
+      break;
+    case REMOTE_KEY_DOWN:
+      reportKey("Down-Arrow");
+      break;
+    case REMOTE_KEY_LEFT:
+      reportKey("Left-Arrow");
+      break;
+    case REMOTE_KEY_RIGHT:
+      reportKey("Right-Arrow");
+      break;
+    case REMOTE_KEY_OK:
+      reportKey("OK");
+      break;
+    default:
+      reportKey("@@@ Unknown key press");
+      break;
+  }
+    
+  // Check if key is repeating
+  if (IrReceiver.decodedIRData.flags & IRDATA_FLAGS_IS_REPEAT) {
+    Serial.println(" - repeat");
+  }
+  else {
+    Serial.println();
   }
 }
