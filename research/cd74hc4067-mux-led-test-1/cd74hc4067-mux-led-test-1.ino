@@ -31,25 +31,8 @@
 const int selectPins[] = {8, 9, 10, 11};  // Arduino pins connected to CD74HC4067's pins S0..S3 
 const int sigPin = 12;                    // Arduino pin connected to CD74HC4067's SIG pin
 const int enPin = 3;                      // Arduino pin connected to CD74HC4067's EN pin
-byte controlPins[] = {
-                  B00000000, 
-                  B00000001,
-                  B00000010,
-                  B00000011,
-                  B00000100,
-                  B00000101,
-                  B00000110,
-                  B00000111,
-                  B00001000,
-                  B00001001,
-                  B00001010,
-                  B00001011,
-                  B00001100,
-                  B00001101,
-                  B00001110,
-                  B00001111 };
 
-int curControlPin = 0;
+byte led = 0; // LED currently being lit: range 0..15 corresponds to CD74HC4067 pins C0..C15
 
 void setup() {
   // Set up the select pins, as outputs
@@ -64,23 +47,23 @@ void setup() {
 }
 
 void loop() {
-  // Set the CD74HC4067 select pins S0..S3 to address the required output pin
-  // To do this for output pin Cy we turn set pin Sx high if Cy has a bit x set
+  // Setup CD74HC4067 pins S0..S3 to address output pin connected to current LED
   for (int i = 0; i < 4; i++) {
     digitalWrite(
       selectPins[i], 
-      (controlPins[curControlPin] & (1 << i)) ? HIGH : LOW 
+      (led & (1 << i)) ? HIGH : LOW 
     );
   }
+  // Light the slected LED, wait a bit, then turn it off
   digitalWrite(sigPin, HIGH);
-
-  curControlPin++;
-  curControlPin %= 16;
-
   delay(100);
   digitalWrite(sigPin, LOW);
 
-  if (curControlPin == 0) {
+  // Move to next LED
+  led = (led + 1) % 16;
+
+  // If we've gone through all the LEDs, turn everything off for 1/2 sec
+  if (led == 0) {
     digitalWrite(enPin, HIGH);
     delay(500);
     digitalWrite(enPin, LOW);
