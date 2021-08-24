@@ -50,12 +50,11 @@ const unsigned int patternCount = sizeof(patterns) / sizeof(patterns[0]);
 unsigned int patternIdx = 0;
 
 void setup() {
-  // Set up the select pins as outputs and set them low
+  // Set up select pins S0..S3 & SIG pin as outputs and set them low
   for (int i = 0; i < 4; i++) {
     pinMode(selectPins[i], OUTPUT);
     digitalWrite(selectPins[i], LOW);
   }
-  // Set up the SIG pin as output and set low
   pinMode(sigPin, OUTPUT);
   digitalWrite(sigPin, LOW);
 }
