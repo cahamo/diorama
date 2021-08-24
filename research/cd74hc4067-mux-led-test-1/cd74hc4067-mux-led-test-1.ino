@@ -1,5 +1,5 @@
 /*
- * Test of lighting LEDs using a CD74HC4067 16 channel multiplexer
+ * 1st of two tests of lighting LEDs using a CD74HC4067 16 channel multiplexer
  * 
  * This test was performed to help determine the best way to light the diorama's LEDs
  * while minimising the number of micro-controller pins that are used.
@@ -20,7 +20,7 @@
  * | D12     | SIG        |
  * +---------+------------+
  * 
- * Each of the CD74HC4067's pins C0..C15 was connected via a 460ohm resistor to the anode of a LED.
+ * Each of the CD74HC4067's pins C0..C15 was connected via a 470ohm resistor to the anode of a LED.
  * The LEDs' cathodes were commoned and then connected to an Arduino GND pin.
  * 
  * This code repeatedly:
@@ -28,9 +28,9 @@
  *   - switches everything off for 0.5sec using the EN pin
  */
 
-const int selectPins[] = {8, 9, 10, 11};
-const int sigPin = 12;
-const int enPin = 3;
+const int selectPins[] = {8, 9, 10, 11};  // Arduino pins connected to CD74HC4067's pins S0..S3 
+const int sigPin = 12;                    // Arduino pin connected to CD74HC4067's SIG pin
+const int enPin = 3;                      // Arduino pin connected to CD74HC4067's EN pin
 byte controlPins[] = {
                   B00000000, 
                   B00000001,
@@ -64,6 +64,8 @@ void setup() {
 }
 
 void loop() {
+  // Set the CD74HC4067 select pins S0..S3 to address the required output pin
+  // To do this for output pin Cy we turn set pin Sx high if Cy has a bit x set
   for (int i = 0; i < 4; i++) {
     digitalWrite(
       selectPins[i], 
