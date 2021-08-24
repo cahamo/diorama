@@ -35,7 +35,7 @@ const int enPin = 3;                      // Arduino pin connected to CD74HC4067
 byte led = 0; // LED currently being lit: range 0..15 corresponds to CD74HC4067 pins C0..C15
 
 void setup() {
-  // Set up the select pins, as outputs
+  // Set up select pins S0..S3, the SIG pin & EN pin as outputs and set them low
   for (int i = 0; i < 4; i++) {
     pinMode(selectPins[i], OUTPUT);
     digitalWrite(selectPins[i], LOW);
@@ -47,7 +47,7 @@ void setup() {
 }
 
 void loop() {
-  // Setup CD74HC4067 pins S0..S3 to address output pin connected to current LED
+  // Setup select pins S0..S3 to address output pin connected to current LED
   for (int i = 0; i < 4; i++) {
     digitalWrite(
       selectPins[i], 
