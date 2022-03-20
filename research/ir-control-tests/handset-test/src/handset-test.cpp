@@ -5,11 +5,11 @@
  * handset.
  *
  * Results are sent over the serial port.
- * 
+ *
  * Copyright (c) 2021, Peter Johnson (cahamo.github.io)
  * MIT License
  */
- 
+
 #include <Arduino.h>
 
 /*
@@ -21,7 +21,7 @@
 
 #include <IRremote.h>
 
-#include "handset-test.h"
+#include <handset-test.h>
 
 #define IRSensorPin 2
 #define FeedbackLEDPin 9
@@ -35,7 +35,7 @@ void setup() {
   Serial.begin(115200);
   // Display running program & lib version
   Serial.println(F("START " __FILE__ " from " __DATE__ "\r\nUsing IRemote library version " VERSION_IRREMOTE));
-  
+
   IrReceiver.begin(IRSensorPin, ENABLE_LED_FEEDBACK, FeedbackLEDPin);
 }
 
@@ -53,34 +53,34 @@ void loop() {
 
   // Interpret which key was pressed
   switch(IrReceiver.decodedIRData.command) {
-    case REMOTE_KEY_0: 
+    case REMOTE_KEY_0:
       reportKey("0");
       break;
-    case REMOTE_KEY_1: 
+    case REMOTE_KEY_1:
       reportKey("1");
       break;
-    case REMOTE_KEY_2: 
+    case REMOTE_KEY_2:
       reportKey("2");
       break;
-    case REMOTE_KEY_3: 
+    case REMOTE_KEY_3:
       reportKey("3");
       break;
-    case REMOTE_KEY_4: 
+    case REMOTE_KEY_4:
       reportKey("4");
       break;
-    case REMOTE_KEY_5: 
+    case REMOTE_KEY_5:
       reportKey("5");
       break;
-    case REMOTE_KEY_6: 
+    case REMOTE_KEY_6:
       reportKey("6");
       break;
-    case REMOTE_KEY_7: 
+    case REMOTE_KEY_7:
       reportKey("7");
       break;
-    case REMOTE_KEY_8: 
+    case REMOTE_KEY_8:
       reportKey("8");
       break;
-    case REMOTE_KEY_9: 
+    case REMOTE_KEY_9:
       reportKey("9");
       break;
     case REMOTE_KEY_STAR:
@@ -108,7 +108,7 @@ void loop() {
       reportKey("@@@ Unknown key press");
       break;
   }
-    
+
   // Check if key is repeating
   if (IrReceiver.decodedIRData.flags & IRDATA_FLAGS_IS_REPEAT) {
     Serial.println(" - repeat");
