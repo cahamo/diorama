@@ -1,0 +1,6 @@
+# Project specific
+.scratchpad
+
+# PlatformIO
+.pio
+.vscode
