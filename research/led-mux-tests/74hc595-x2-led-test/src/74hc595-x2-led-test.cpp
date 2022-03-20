@@ -1,21 +1,21 @@
 /*
  * Test of lighting 16 LEDs using two 74HC595 shift registers and an Arduino Uno
- * 
+ *
  * This test was performed to help determine the best way to light the diorama's LEDs
  * while minimising the number of micro-controller pins that are used.
- * 
+ *
  * Connections
  * ===========
- * 
+ *
  * Place 16 LEDs on a breadboard, each with a 1000ohm current limiting resitor, all with the
- * cathodes commoned to an Arduino GND pin and the anodes connected to a shift register 
+ * cathodes commoned to an Arduino GND pin and the anodes connected to a shift register
  * output (Qn, 0<=n<=7).
- * 
+ *
  * Make connections to the shift registers as follows:
- * 
+ *
  * Shift register 1
  * ----------------
- * 
+ *
  * Pin # | Pin Name | Connect to
  * ------+----------+---------
  *   1   |   Q1     | LED #2 anode
@@ -34,10 +34,10 @@
  *  14   |   DS     | Arduino Uno pin D11
  *  15   |   Q0     | LED #1 anode
  *  16   |   VCC    | Arduino Uno 5V pin
- * 
+ *
  * Shift register 2
  * ----------------
- * 
+ *
  * Pin # | Pin Name | Connect to
  * ------+----------+---------
  *   1   |   Q1     | LED #10 anode
@@ -56,9 +56,10 @@
  *  14   |   DS     | Shift register 1 pin 9 (Q7')
  *  15   |   Q0     | LED #9 anode
  *  16   |   VCC    | Arduino Uno 5V pin
- * 
+ *
  */
 
+#include <Arduino.h>
 
 #define DATA_PIN 11   // => 74HC595 pin 14 (DS)
 #define CLOCK_PIN 12  // => 74HC595 pin 11 (SH_CP)
@@ -130,10 +131,25 @@ const uint16_t sequence[] = {
   0b0000111100000000,
   0b0000000011110000,
   0b0000000000001111,
-  0b0000000000000000  
+  0b0000000000000000
 };
 
 #define SEQUENCE_LENGTH (sizeof(sequence) / sizeof(sequence[0]))
+
+void setData(uint16_t data) {
+  // set up shift registers to light the required LEDs
+  byte lsByte = data & 0x00FF;          // byte of data for 1st shift register
+  byte msByte = (data & 0xFF00) >> 8;   // byte of data for 2nd shift register
+  // send the data to the shift registers
+  // set latch low to prevent flicker as data is shifted in
+  digitalWrite(LATCH_PIN, LOW);
+  // shift out msByte: this gets intially gets stored in 1st shift register
+  shiftOut(DATA_PIN, CLOCK_PIN, MSBFIRST, msByte);
+  // shift out lsByte: this causes msByte to be shifted over into 2nd register
+  shiftOut(DATA_PIN, CLOCK_PIN, MSBFIRST, lsByte);
+  // latch on: lights the LEDs according to pattern defined by data
+  digitalWrite(LATCH_PIN, HIGH);
+}
 
 void setup() {
   // Set all control pins to output
@@ -143,25 +159,10 @@ void setup() {
 }
 
 void loop() {
-  uint16_t data;
+  // uint16_t data;
   // Loop through all sequences, with delay of 200ms between them, then start over on next loop() call
-  for (int i = 0; i < SEQUENCE_LENGTH; i++) {
+  for (unsigned int i = 0; i < SEQUENCE_LENGTH; i++) {
     setData(sequence[i]);
     delay(200);
   }
-}
-
-void setData(uint16_t data) {
-  // set up shift registers to light the required LEDs
-  byte lsByte = data & 0x00FF;          // byte of data for 1st shift register
-  byte msByte = (data & 0xFF00) >> 8;   // byte of data for 2nd shift register
-  // send the data to the shift registers
-  // set latch low to prevent flicker as data is shifted in
-  digitalWrite(LATCH_PIN, LOW);         
-  // shift out msByte: this gets intially gets stored in 1st shift register
-  shiftOut(DATA_PIN, CLOCK_PIN, MSBFIRST, msByte);
-  // shift out lsByte: this causes msByte to be shifted over into 2nd register
-  shiftOut(DATA_PIN, CLOCK_PIN, MSBFIRST, lsByte);
-  // latch on: lights the LEDs according to pattern defined by data
-  digitalWrite(LATCH_PIN, HIGH);
 }
