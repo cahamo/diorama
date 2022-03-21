@@ -12,4 +12,4 @@ At present the only code is in the `research` sub-directory - it is code used wi
 
 * `led-mux-tests` - a set of programs used to test the effectiveness of using software serial libraries to communicate between microcontrollers. [[More information](./research/led-mux-tests/README.md)].
 
-* `serial-tests` - a pair of programs used to test the effectiveness of using the `SoftwareSerial` library to communicate between microcontrollers. [[More information](/research/serial-tests/README.md)].
+* `serial-tests` - a set of programs used to test the effectiveness of using serial communications between microcontrollers. [[More information](/research/serial-tests/README.md)].
