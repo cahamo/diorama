@@ -12,7 +12,7 @@ Sets up an ATtiny85 as an I2C master device, using the `TinyWireM` library to pr
 
 The program sends text data every 500ms to a slave device with address 0x04.
 
-Used in diorama experiment [#5](https://cahamo.github.io/diorama/experiment-5)
+_Used in diorama experiment [#5](https://cahamo.github.io/projects/diorama/experiment-5)_
 
 ## `i2c-master-write-nano`
 
@@ -20,7 +20,7 @@ Sets up an Arduino Nano as an I2C master device, using the `Wire` library to pro
 
 The program sends text data every 500ms to a slave device with address 0x04.
 
-Used in diorama experiment [#5](https://cahamo.github.io/diorama/experiment-5)
+_Used in diorama experiment [#5](https://cahamo.github.io/projects/diorama/experiment-5)_
 
 ## `i2c-slave-read-uno`
 
@@ -28,4 +28,5 @@ Sets up an Arduino Uno as an I2C slave device with address 0x04, using the `Wire
 
 The program is used to debug the data sent by an ATtiny85 or  Arduino Nano running `i2c-master-write-attiny85` or `i2c-master-write-nano` respecyively.
 
-Used in diorama experiment [#5](https://cahamo.github.io/diorama/experiment-5)
+_Used in diorama experiment [#5](https://cahamo.github.io/projects/diorama/experiment-5)_
+

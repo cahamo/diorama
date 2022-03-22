@@ -12,7 +12,7 @@ Uses the [IRemote library v3](https://github.com/Arduino-IRremote/Arduino-IRremo
 
 This sketch was used to find the codes emitted by the handset that is to be used to control the diorama's features.
 
-Used in diorama experiment [#1](https://cahamo.github.io/diorama/experiment-1)
+_Used in diorama experiment [#1](https://cahamo.github.io/diorama/experiment-1)_
 
 ## `handset-test`
 
@@ -22,4 +22,4 @@ Reports the name of the key being pressed on the Serial port and flags if the ke
 
 Uses the [IRemote library v3](https://github.com/Arduino-IRremote/Arduino-IRremote).
 
-Used in diorama experiment [#1](https://cahamo.github.io/diorama/experiment-1)
+_Used in diorama experiment [#1](https://cahamo.github.io/projects/diorama/experiment-1)_

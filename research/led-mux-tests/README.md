@@ -10,7 +10,7 @@ Contains a single C++ file - `cd74hc4067-mux-led-test-1.cpp` - that performs the
 
 No libraries are required.
 
-Used in diorama experiment [#3](https://cahamo.github.io/diorama/experiment-3)
+_Used in diorama experiment [#3](https://cahamo.github.io/projects/diorama/experiment-3)_
 
 ## `cd74hc4067-mux-led-test-2`
 
@@ -18,7 +18,7 @@ Contains a single C++ file - `cd74hc4067-mux-led-test-2.cpp` - that performs the
 
 No libraries are required.
 
-Used in diorama experiment [#3](https://cahamo.github.io/diorama/experiment-3)
+_Used in diorama experiment [#3](https://cahamo.github.io/projects/diorama/experiment-3)_
 
 ## `74hc595-x2-led-test`
 
@@ -26,4 +26,4 @@ Contains a single C++ file - `74hc595-x2-led-test.cpp` - that performs a test of
 
 No libraries are required.
 
-Used in diorama experiment [#3](https://cahamo.github.io/diorama/experiment-3)
+_Used in diorama experiment [#3](https://cahamo.github.io/projects/diorama/experiment-3)_
