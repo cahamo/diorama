@@ -23,3 +23,13 @@ Reports the name of the key being pressed on the Serial port and flags if the ke
 Uses the [IRemote library v3](https://github.com/Arduino-IRremote/Arduino-IRremote).
 
 _Used in diorama experiment [#1](https://cahamo.github.io/projects/diorama/experiment-1)_
+
+## `rgb-led-colour-balance`
+
+Contains C++ code file `rgb-led-colour-balance.cpp`, a program used to display a repeating sequence of various colours in an RGB LED.
+
+The purpose of the program is to enable different values of resistors to be tried to balance the intensity of the RGB LED's red, green and blue elements so that the results can be seen straight away.
+
+No additional libraries are required.
+
+_Used in diorama experiment [#6](https://cahamo.github.io/projects/diorama/experiment-6).
