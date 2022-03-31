@@ -15,3 +15,5 @@ At present the only code is in the `research` sub-directory - it is code used wi
 * `serial-tests` - a set of programs used to test the effectiveness of using serial communications between microcontrollers. [[More information](/research/serial-tests/README.md)].
 
 * `i2c-tests` - a set of programs used to test the effectiveness of using I2C for communication between microcontrollers. [[More information](/research/i2c-tests/README.md)].
+
+* `feature-tests` - programs used to test the diorama's electro-mechanical features. [[More information](/research/feature-tests/README.md)].
