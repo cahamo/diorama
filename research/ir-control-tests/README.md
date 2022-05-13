@@ -32,4 +32,4 @@ The purpose of the program is to enable different values of resistors to be trie
 
 No additional libraries are required.
 
-_Used in diorama experiment [#6](https://cahamo.github.io/projects/diorama/experiment-6).
+_Used in diorama experiment [#6](https://cahamo.github.io/projects/diorama/experiment-6)_
