@@ -33,3 +33,13 @@ The purpose of the program is to enable different values of resistors to be trie
 No additional libraries are required.
 
 _Used in diorama experiment [#6](https://cahamo.github.io/projects/diorama/experiment-6)_
+
+## `mock-i2c-command-receiver`
+
+Contains C++ code file `mock-i2c-command-receiver.cpp`, that implements an I2C slave device that is sent command data from the master microcontroller that is interpreting IR remote input.
+
+The purpose of the program is to be used as a stand-in for the diorama's central control microcontroller when testing the the IR remote controller code.
+
+Uses the Arduino Wire library.
+
+_Not used in any diorama experiments. It is designed to help test production code._
