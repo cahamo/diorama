@@ -6,7 +6,9 @@ This repository contains the project's source code. A description of the project
 
 ## Contents
 
-At present the only code is in the `research` sub-directory - it is code used with experimental circuits. The `research` sub-directory is further divided into several sub-directories, each containing related projects. They are:
+Production code is sored in the `src` sub-directory.
+
+Code used in development, that does not form part of the fial production code, is stored in the `research` sub-directory. The `research` sub-directory is further divided into several sub-directories, each containing related projects. They are:
 
 * `ir-control-tests` - a set of projects used to investigate the operation of the infra-red controller and receiver that is to be used to control the diorama's electronic features, along with associated components. [[More information](./research/ir-control-tests/README.md)].
 
