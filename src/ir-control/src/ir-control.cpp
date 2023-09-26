@@ -375,6 +375,8 @@ void processKey(uint8_t keyCode) {
 }
 
 void setup() {
+  feedbackLED.display(RGBLED::Blue);
+
   DBGbegin(9600);
   DBGprintln(F("IR Command Processor Running..."));
   DBGblankln();
@@ -389,6 +391,8 @@ void setup() {
   DBGprintln(cmdTimeout.getLengthMs());
   DBGprint(F("Is countdown running: "));
   DBGprintln(cmdTimeout.isRunning() ? "YES" : "NO");
+
+  feedbackLED.display(RGBLED::Off);
 }
 
 void loop() {
