@@ -422,7 +422,6 @@ void loop() {
     if (cmdTimeout.isRunning()) {
       cmdTimeout.restart();
     }
-    blinkFeedbackLED(RGBLED::Red, true);
     return;
   }
 
