@@ -227,31 +227,26 @@ void processKey(uint8_t keyCode) {
 
           case REMOTE_KEY_UP:
             DBGprintln(F("Ambient: brightness: brighten"));
-            // reportSuccess();
             handleSuccess(CMD_AMBIENT, SUBCMD_AMBIENT_BRIGHTNESS, CMDPARAM_AMBIENT_BRIGHTNESS_UP);
             break;
 
           case REMOTE_KEY_DOWN:
             DBGprintln(F("Ambient: brightness: dim"));
-            // reportSuccess();
             handleSuccess(CMD_AMBIENT, SUBCMD_AMBIENT_BRIGHTNESS, CMDPARAM_AMBIENT_BRIGHTNESS_DOWN);
             break;
 
           case REMOTE_KEY_LEFT:
             DBGprintln(F("Ambient: switch: off"));
-            // reportSuccess();
             handleSuccess(CMD_AMBIENT, SUBCMD_AMBIENT_SWITCH, CMDPARAM_AMBIENT_SWITCH_OFF);
             break;
 
           case REMOTE_KEY_RIGHT:
             DBGprintln(F("Ambient: switch: on"));
-            // reportSuccess();
             handleSuccess(CMD_AMBIENT, SUBCMD_AMBIENT_SWITCH, CMDPARAM_AMBIENT_SWITCH_ON);
             break;
 
           case REMOTE_KEY_OK:
             DBGprintln(F("Reset: <null>: <null>"));
-            // reportSuccess();
             handleSuccess(CMD_RESET, SUBCMD_NULL);
             break;
 
@@ -270,7 +265,6 @@ void processKey(uint8_t keyCode) {
       if (keyCode == REMOTE_KEY_0)  {
         DBGprintln(F("Lighting: section-all: "));
         DBGprintlnfmt(sectionId, HEX);
-        // reportSuccess();
         handleSuccess(CMD_LIGHTING, SUBCMD_LIGHTING_SECTION, sectionId);
       }
 
@@ -280,7 +274,6 @@ void processKey(uint8_t keyCode) {
         DBGprintfmt(sectionId, HEX);
         DBGprint(F("/"));
         DBGprintlnfmt(lightId, HEX);
-        // reportSuccess();
         handleSuccess(CMD_LIGHTING, SUBCMD_LIGHTING_LIGHT, MakeSectionLightParam(sectionId, lightId));
       }
 
@@ -300,19 +293,16 @@ void processKey(uint8_t keyCode) {
         case REMOTE_KEY_OK:
         case REMOTE_KEY_0:
           DBGprintln(F("Lighting: all: everything"));
-          // reportSuccess();
           handleSuccess(CMD_LIGHTING, SUBCMD_LIGHTING_ALL, CMDPARAM_LIGHTING_ALL_EVERYTHING);
           break;
 
         case REMOTE_KEY_STAR:
           DBGprintln(F("Lighting: all: normal"));
-          // reportSuccess();
           handleSuccess(CMD_LIGHTING, SUBCMD_LIGHTING_ALL, CMDPARAM_LIGHTING_ALL_NORMAL);
           break;
 
         case REMOTE_KEY_HASH:
           DBGprintln(F("Lighting: all: flicker"));
-          // reportSuccess();
           handleSuccess(CMD_LIGHTING, SUBCMD_LIGHTING_ALL, CMDPARAM_LIGHTING_ALL_FLICKER);
           break;
 
@@ -330,12 +320,10 @@ void processKey(uint8_t keyCode) {
         uint8_t featureId = mapIrKeyToID(keyCode);
         DBGprint(F("Feature: activate: "));
         DBGprintlnfmt(featureId, HEX);
-        // reportSuccess();
         handleSuccess(CMD_FEATURE, SUBCMD_FEATURE_ACTIVATE, featureId);
       }
       else if (keyCode == REMOTE_KEY_0) {
         DBGprintln(F("Feature: reset: <null>"));
-        // reportSuccess();
         handleSuccess(CMD_FEATURE, SUBCMD_FEATURE_RESET);
       }
       else {
@@ -351,12 +339,10 @@ void processKey(uint8_t keyCode) {
         uint8_t programId = mapIrKeyToID(keyCode);
         DBGprint(F("Program: run: "));
         DBGprintlnfmt(programId, HEX);
-        // reportSuccess();
         handleSuccess(CMD_PROGRAM, SUBCMD_PROGRAM_RUN, programId);
       }
       else if (keyCode == REMOTE_KEY_0) {
         DBGprintln(F("Program: stop: <null>"));
-        // reportSuccess();
         handleSuccess(CMD_PROGRAM, SUBCMD_PROGRAM_STOP);
       }
       else {
@@ -433,7 +419,6 @@ void loop() {
   // Flash LED to acknowledge
   blinkFeedbackLED(RGBLED::Blue);
 
-  // DBGprintln(F("-- timeout cancelled"));
   DBGprint(F("Key code: "));
   DBGprintlnfmt(IrReceiver.decodedIRData.command, HEX);
 
