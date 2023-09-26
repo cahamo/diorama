@@ -27,13 +27,14 @@ bool CountdownTimer::hasTimedOut() const {
     }
     return (millis() - _startTime) >= _timeMs;
 }
+
 unsigned long CountdownTimer::ellapsedTimeMs() const {
     if (!isRunning())
         return 0;   // not active - no time ellapsed
     unsigned long now = millis();
     if (now - _startTime >= _timeMs)
         return _timeMs;   // timed out - return timer length
-    return _timeMs - (now - _startTime);
+    return now - _startTime;
 }
 
 unsigned long CountdownTimer::remainingTimeMs() const {
