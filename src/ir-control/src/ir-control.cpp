@@ -49,7 +49,11 @@ CountdownTimer cmdTimeout(2500);  // 2.5 seconds
 
 #define FEEDBACK_LED_ACK_FLASH_OFF_TIME 100
 #define FEEDBACK_LED_ACK_FLASH_ON_TIME 50
+#define FEEDBACK_LED_ACK_FLASH_ON_TIME_LONG 250
 #define FEEDBACK_LED_ACK_FLASH_COUNT 1
+
+#define FEEDBACK_LED_BLINK_SHORT false
+#define FEEDBACK_LED_BLINK_LONG true
 
 // Global variables
 uint8_t state = STATE_ROOT;
@@ -151,12 +155,12 @@ void flashFeedbackLED(RGBColour colour) {
   );
 }
 
-void blinkFeedbackLED(RGBColour colour, bool restorePrevColour = false) {
+void blinkFeedbackLED(RGBColour colour, bool longFlash) {
   feedbackLED.blink(
     colour,
     FEEDBACK_LED_ACK_FLASH_OFF_TIME,
-    FEEDBACK_LED_ACK_FLASH_ON_TIME,
-    restorePrevColour
+    longFlash ? FEEDBACK_LED_ACK_FLASH_ON_TIME_LONG : FEEDBACK_LED_ACK_FLASH_ON_TIME,
+    false
   );
 }
 
@@ -168,7 +172,7 @@ void reportTimeout() {
 
 void reportSuccess() {
   DBGprintln(F("!!! Success"));
-  flashFeedbackLED(RGBLED::Green);
+  blinkFeedbackLED(RGBLED::Green, FEEDBACK_LED_BLINK_LONG);
 }
 
 void reportError() {
@@ -417,12 +421,12 @@ void loop() {
   cmdTimeout.stop();
 
   // Flash LED to acknowledge
-  blinkFeedbackLED(RGBLED::Blue);
+  blinkFeedbackLED(RGBLED::Blue, FEEDBACK_LED_BLINK_SHORT);
 
   DBGprint(F("Key code: "));
   DBGprintlnfmt(IrReceiver.decodedIRData.command, HEX);
 
   processKey(IrReceiver.decodedIRData.command);
 
-  delay(50);
+  delay(10);
 }
