@@ -56,8 +56,13 @@
     ((cmd) >> 4)
 #define ExtractSubCommand(cmd) \
     ((cmd) & 0x0F)
+
 #define MakeSectionLightParam(sectionId, lightId) \
-    ((((sectionId) & 0x0F) << 4) | ((lightId) & 0x0F))
+    ((((lightId) & 0x0F) << 4) | ((sectionId) & 0x0F))
+#define ExtractLightParam(param) \
+    ((param) >> 4)
+#define ExtractSectionParam(param) \
+    ((param) & 0x0F)
 
 // Parameter IDs
 
@@ -67,8 +72,8 @@
 #define LIGHTING_WORKSHOP_SECTION_ID    3  // TBC: awaiting construction
 #define LIGHTING_LEANTO_SECTION_ID      4  // TBC: awaiting construction
 
-#define LIGHTING_FLICKER_LIGHT_1_ID     12
-#define LIGHTING_FLICKER_LIGHT_2_ID     13
+#define LIGHTING_FLICKER_LIGHT_1_ID     0xF
+#define LIGHTING_FLICKER_LIGHT_2_ID     0xE
 #define LIGHTING_FLICKER_LIGHT_BASE     LIGHTING_FLICKER_LIGHT_1_ID
 
 // Number of valid IDs for certain command types
