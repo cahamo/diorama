@@ -135,10 +135,10 @@ void logCommand(uint8_t mainCmd, uint8_t subCmd, uint8_t param){
  * @param param Parameter data. Format is command dependent. Defaults to CMDPARAM_NULL (0)
  */
 void sendCommand(uint8_t mainCmd, uint8_t subCmd, uint8_t param) {
-  // Wire.beginTransmission(CENTRAL_CONTROL_I2C_ADDR);
-  // Wire.write((byte)MakeCommand(mainCmd, subCmd));
-  // Wire.write(param);
-  // Wire.endTransmission();
+  Wire.beginTransmission(CENTRAL_CONTROL_I2C_ADDR);
+  Wire.write((byte)MakeCommand(mainCmd, subCmd));
+  Wire.write(param);
+  Wire.endTransmission();
 }
 
 void flashFeedbackLED(RGBColour colour) {
