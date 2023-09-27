@@ -42,18 +42,21 @@ The following table lists the commands and the format of the two data bytes that
 | Command | Main Command ID | Sub Command ID | Parameter |
 |:--------|:----------------|:---------------|:----------|
 | Toggle given light in given section on & off | 1 | 1 | High nybble: 0..8, 0xE, 0xF (Light ID), Low nybble: 0..8 (Section ID) |
-| Toggle all lights in given section on & off| 1 | 2 | 0..8 (Section ID) |
+| Toggle all lights in given section on & off | 1 | 2 | 0..8 (Section ID) |
 | Toggle all lights on and off | 1 | 3 | 1 |
 | Toggle all normal lights on and off | 1 | 3 | 2 |
 | Toggle all flicker lights on and off | 1 | 3 | 3 |
 | Toggle a given dual state feature or activate a given single state feature | 2 | 1 | 0..8 (Feature ID) |
-| Reset all dual state features | 2 | 2 | 0 |
+| Reset all dual state features | 2 | 2 | _N/a_ |
 | Switch ambient lighting on to full brightness | 3 | 1 | 0xFF |
 | Switch ambient lighting off | 3 | 1 | 0 |
 | Brighten ambient lighting a little | 3 | 2 | 1 |
 | Dim ambient lighting a little | 3 | 2 | 0xFF |
 | Run given program | 4 | 1 | 0..8 (Program ID) |
-| Stop current program | 4 | 2 | 0 |
-| Master reset | 5 | 0 | 0 |
+| Stop current program | 4 | 2 | _N/a_ |
+| Master reset | 5 | _N/a_ | _N/a_ |
 
-Note that section, normal light, feature and program codes that use handset keys `1` to `9` map onto an ID that is one less than the numeral on the handset key, e.g key `4` represents command ID 3. The `*` and `#` flicker light codes represent command codes 0xF & 0xE respectively. Commands may have sub-commands and additional data.
+Notes:
+
+1. Section, normal light, feature and program codes that use handset keys `1` to `9` map onto an ID that is one less than the numeral on the handset key, e.g key `4` represents command ID 3. The `*` and `#` flicker light codes represent command codes 0xF & 0xE respectively.
+2. Where _N/a_ appears in the table it means that the value is ignored and can be anything. Zero is usually used, but don't assume that it is.
