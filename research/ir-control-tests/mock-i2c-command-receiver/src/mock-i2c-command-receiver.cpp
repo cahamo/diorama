@@ -14,6 +14,8 @@
 
 #include <Wire.h>
 
+#include "../../../../src/common/commands.h"
+
 
 // Command just read
 byte  command = 0;
@@ -44,26 +46,151 @@ void receiveCmd(int byteCount) {
   }
 }
 
+void writeCmdDetails()
+{
+  byte mainCmd = ExtractMainCommand(command);
+  byte subCmd = ExtractSubCommand(command);
+  Serial.print(F("Command: "));
+  switch(mainCmd) {
+    case CMD_LIGHTING:
+      Serial.println(F("MODEL LIGHTING"));
+      Serial.print(F("  Sub-Command: "));
+      switch(subCmd) {
+        case SUBCMD_LIGHTING_LIGHT: {
+          Serial.println(F("Toggle Specified Light"));
+          byte lightID = ExtractLightParam(param);
+          byte sectionID = ExtractSectionParam(param);
+          Serial.print(F("  Param: Section "));
+          Serial.print(sectionID);
+          Serial.print(F(", Light "));
+          Serial.println(lightID);
+         }
+          break;
+        case SUBCMD_LIGHTING_SECTION:
+          Serial.println(F("Toggle Secton Lights"));
+          Serial.print(F("  Param: Section "));
+          Serial.println(param);
+          break;
+        case SUBCMD_LIGHTING_ALL:
+          Serial.println(F("Toggle All"));
+          Serial.print(F("  Param: "));
+          switch(param) {
+            case CMDPARAM_LIGHTING_ALL_EVERYTHING:
+              Serial.println(F("Everything "));
+              break;
+            case CMDPARAM_LIGHTING_ALL_NORMAL:
+              Serial.println(F("Normal "));
+              break;
+            case CMDPARAM_LIGHTING_ALL_FLICKER:
+              Serial.println(F("Flicker "));
+              break;
+            default:
+              Serial.println(F("** Unknown "));
+              break;
+          }
+          break;
+        default:
+          Serial.println(F("** Unknown"));
+          break;
+      }
+      break;
+    case CMD_FEATURE:
+      Serial.println(F("FEATURE"));
+      Serial.print(F("  Sub-Command: "));
+      switch(subCmd) {
+        case SUBCMD_FEATURE_ACTIVATE:
+          Serial.println(F("Activate or Toggle"));
+          Serial.print(F("  Param: Feature ID "));
+          Serial.println(param);
+          break;
+        case SUBCMD_FEATURE_RESET:
+          Serial.println(F("Reset All"));
+          break;
+        default:
+          Serial.println(F("** Unknown"));
+          break;
+      }
+      break;
+    case CMD_AMBIENT:
+      Serial.println(F("AMBIENT LIGHTING"));
+      Serial.print(F("  Sub-Command: "));
+      switch(subCmd) {
+        case SUBCMD_AMBIENT_SWITCH:
+          Serial.println(F("Switch"));
+          Serial.print(F("  Param: "));
+          switch(param) {
+            case CMDPARAM_AMBIENT_SWITCH_OFF:
+              Serial.println(F("Off"));
+              break;
+            case CMDPARAM_AMBIENT_SWITCH_ON:
+              Serial.println(F("On"));
+              break;
+            default:
+              Serial.println(F("** Unknown"));
+              break;
+          }
+          break;
+        case SUBCMD_AMBIENT_BRIGHTNESS:
+          Serial.println(F("Brightness"));
+          Serial.print(F("  Param: "));
+          switch(param) {
+            case CMDPARAM_AMBIENT_BRIGHTNESS_UP:
+              Serial.println(F("Up"));
+              break;
+            case CMDPARAM_AMBIENT_BRIGHTNESS_DOWN:
+              Serial.println(F("Down"));
+              break;
+            default:
+              Serial.println(F("** Unknown"));
+              break;
+          }
+          break;
+        default:
+          Serial.println(F("** Unknown"));
+          break;
+      }
+      break;
+    case CMD_PROGRAM:
+      Serial.println(F("PROGRAM"));
+      Serial.print(F("  Sub-Command: "));
+      switch(subCmd) {
+        case SUBCMD_PROGRAM_RUN:
+          Serial.println(F("Run"));
+          Serial.print(F("  Param: Program ID "));
+          Serial.println(param);
+          break;
+        case SUBCMD_PROGRAM_STOP:
+          Serial.println(F("Stop Current"));
+          break;
+        default:
+          Serial.println(F("** Unknown"));
+          break;
+      }
+      break;
+    case CMD_RESET:
+      Serial.println(F("RESET"));
+      break;
+    default:
+      Serial.println(F("** UNKNOWN"));
+  }
+}
+
 void setup()
 {
   Wire.begin(4);                // join i2c bus with address #4
   Wire.onReceive(receiveCmd);   // register i2c receive event handler
   Serial.begin(9600);           // start serial for output
-  Serial.println("Mock command reader running");
+  Serial.println("Mock command interpreter running");
   Serial.println();
 }
 
 void loop()
 {
-  delay(100);
+  delay(10);
   switch(state) {
     case IRDATA_AVAILABLE:
       Serial.println();
-      Serial.println(F("DATA RECEIVED:"));
-      Serial.print(F("  Command: "));
-      Serial.println(command, HEX);
-      Serial.print(F("  Param: "));
-      Serial.println(param, HEX);
+      writeCmdDetails();
       state = IRDATA_WAITING;
       break;
     case IRDATA_READING:
@@ -73,9 +200,10 @@ void loop()
     case IRDATA_ERROR:
       Serial.println();
       Serial.println(F("ERROR: Bad data count"));
+      state = IRDATA_WAITING;
       break;
     case IRDATA_WAITING:
-      Serial.print(F("."));
+      // Do nothing
       break;
     default:
       Serial.println();
