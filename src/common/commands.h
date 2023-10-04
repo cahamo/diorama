@@ -36,9 +36,9 @@
 
 // Special parameter values
 
-#define CMDPARAM_LIGHTING_ALL_EVERYTHING  0x01
-#define CMDPARAM_LIGHTING_ALL_NORMAL      0x02
-#define CMDPARAM_LIGHTING_ALL_FLICKER     0x03
+#define CMDPARAM_LIGHTING_ALL_NORMAL      0x01
+#define CMDPARAM_LIGHTING_ALL_FLICKER     0x02
+#define CMDPARAM_LIGHTING_ALL_EVERYTHING  (CMDPARAM_LIGHTING_ALL_NORMAL | CMDPARAM_LIGHTING_ALL_FLICKER)
 
 #define CMDPARAM_AMBIENT_SWITCH_OFF       0x00
 #define CMDPARAM_AMBIENT_SWITCH_ON        0xFF
@@ -68,30 +68,25 @@
 
 #define LIGHTING_STORE_SECION_ID        0
 #define LIGHTING_FORGE_SECTION_ID       1
-#define LIGHTING_OFFICE_SECTION_ID      2  // TBC: awaiting construction
-#define LIGHTING_WORKSHOP_SECTION_ID    3  // TBC: awaiting construction
-#define LIGHTING_LEANTO_SECTION_ID      4  // TBC: awaiting construction
+#define LIGHTING_OFFICE_SECTION_ID      2
+#define LIGHTING_WORKSHOP_SECTION_ID    3
+#define LIGHTING_LEANTO_SECTION_ID      4
 
-#define LIGHTING_FLICKER_LIGHT_1_ID     0xF
-#define LIGHTING_FLICKER_LIGHT_2_ID     0xE
-#define LIGHTING_FLICKER_LIGHT_BASE     LIGHTING_FLICKER_LIGHT_1_ID
+#define LIGHTING_FLICKER_LIGHT_ID       0x0F
+
+#define LIGHTING_INVALID_LIGHT_ID       0xFF
 
 // Number of valid IDs for certain command types
 #define LIGHTING_SECTION_COUNT  5
-#define FEATURE_COUNT           3
-#define PROGRAM_COUNT           1
+#define FEATURE_COUNT           3       // TODO: correct number required - arbitrary value for testing
+#define PROGRAM_COUNT           1       // TODO: correct number required - arbitrary value for testing
 
-// Number of lights in each lighting section
+// Number of normal lights in each lighting section
 #define LIGHTING_STORE_NORMAL_LIGHT_COUNT       2
-#define LIGHTING_STORE_FLICKER_LIGHT_COUNT      1
 #define LIGHTING_FORGE_NORMAL_LIGHT_COUNT       4
-#define LIGHTING_FORGE_FLICKER_LIGHT_COUNT      2 // Count TBC
-#define LIGHTING_OFFICE_NORMAL_LIGHT_COUNT      1 // TBC: awaiting construction
-#define LIGHTING_OFFICE_FLICKER_LIGHT_COUNT     1 // TBC: awaiting construction
-#define LIGHTING_WORKSHOP_NORMAL_LIGHT_COUNT    2 // TBC: awaiting construction
-#define LIGHTING_WORKSHOP_FLICKER_LIGHT_COUNT   1 // TBC: awaiting construction
-#define LIGHTING_LEANTO_NORMAL_LIGHT_COUNT      1 // TBC: awaiting construction
-#define LIGHTING_LEANTO_FLICKER_LIGHT_COUNT     0 // TBC: awaiting construction
+#define LIGHTING_OFFICE_NORMAL_LIGHT_COUNT      1
+#define LIGHTING_WORKSHOP_NORMAL_LIGHT_COUNT    2
+#define LIGHTING_LEANTO_NORMAL_LIGHT_COUNT      1
 
 // Map of lighting sections to number of normal lights in section
 byte lightingNormalLightsInSection[LIGHTING_SECTION_COUNT] = {
@@ -102,13 +97,21 @@ byte lightingNormalLightsInSection[LIGHTING_SECTION_COUNT] = {
     LIGHTING_LEANTO_NORMAL_LIGHT_COUNT
 };
 
-// Map of lighting sections to number of flicker lights in section
-byte lightingFlickerLightsInSection[LIGHTING_SECTION_COUNT] = {
-    LIGHTING_STORE_FLICKER_LIGHT_COUNT,
-    LIGHTING_FORGE_FLICKER_LIGHT_COUNT,
-    LIGHTING_OFFICE_FLICKER_LIGHT_COUNT,
-    LIGHTING_WORKSHOP_FLICKER_LIGHT_COUNT,
-    LIGHTING_LEANTO_FLICKER_LIGHT_COUNT
+// Flags indicating whether section has a flicker light
+// -- there can only be zero or one flicker light per section
+#define LIGHTING_STORE_HAS_FLICKER_LIGHT        true
+#define LIGHTING_FORGE_HAS_FLICKER_LIGHT        true
+#define LIGHTING_OFFICE_HAS_FLICKER_LIGHT       true
+#define LIGHTING_WORKSHOP_HAS_FLICKER_LIGHT     true
+#define LIGHTING_LEANTO_HAS_FLICKER_LIGHT       true
+
+// Map of showing which sections have flicker lights
+bool lightingHasFlickerLightInSection[LIGHTING_SECTION_COUNT] = {
+    LIGHTING_STORE_HAS_FLICKER_LIGHT,
+    LIGHTING_FORGE_HAS_FLICKER_LIGHT,
+    LIGHTING_OFFICE_HAS_FLICKER_LIGHT,
+    LIGHTING_WORKSHOP_HAS_FLICKER_LIGHT,
+    LIGHTING_LEANTO_HAS_FLICKER_LIGHT
 };
 
 #endif

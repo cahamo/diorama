@@ -41,18 +41,18 @@ CountdownTimer cmdTimeout(2500);  // 2.5 seconds
 #define STATE_FEATURE 3
 #define STATE_PROGRAM 4
 
-// Feedback LED flash / blink times
-#define FEEDBACK_FLASH_OFF_TIME 50
-#define FEEDBACK_FLASH_ON_TIME 150
-#define FEEDBACK_FLASH_PAUSE_TIME 150
-#define FEEDBACK_FLASH_COUNT 4
-
+// Feedback LED flash / blink times & flash counts
+// flashing
+#define FEEDBACK_LED_FLASH_OFF_TIME 50
+#define FEEDBACK_LED_FLASH_ON_TIME 150
+#define FEEDBACK_LED_FLASH_COUNT 4
+// blinking
 #define FEEDBACK_LED_BLINK_OFF_TIME 100
 #define FEEDBACK_LED_BLINK_ON_TIME_SHORT 50
 #define FEEDBACK_LED_BLINK_ON_TIME_LONG 250
 #define FEEDBACK_LED_BLINK_COUNT 1
 
-//
+// Long and short LED blink flags
 #define FEEDBACK_LED_BLINK_SHORT false
 #define FEEDBACK_LED_BLINK_LONG true
 
@@ -69,7 +69,7 @@ uint8_t state = STATE_ROOT;
  *
  * @param code Handset code
  * @param permitSpecial Whether "special" key codes are permitted
- * @return Returns required ID or 0xFF if code not recognised
+ * @return Returns required ID or LIGHTING_INVALID_LIGHT_ID if code not recognised
 */
 uint8_t mapIrKeyToID(uint8_t code, bool permitSpecial = false) {
   switch(code) {
@@ -82,9 +82,8 @@ uint8_t mapIrKeyToID(uint8_t code, bool permitSpecial = false) {
     case REMOTE_KEY_7: return 6;
     case REMOTE_KEY_8: return 7;
     case REMOTE_KEY_9: return 8;
-    case REMOTE_KEY_STAR: return permitSpecial ? LIGHTING_FLICKER_LIGHT_1_ID : 0xFF;
-    case REMOTE_KEY_HASH: return permitSpecial ? LIGHTING_FLICKER_LIGHT_2_ID : 0xFF;
-    default: return 0xff;
+    case REMOTE_KEY_HASH: return permitSpecial ? LIGHTING_FLICKER_LIGHT_ID : LIGHTING_INVALID_LIGHT_ID;
+    default: return LIGHTING_INVALID_LIGHT_ID;
   }
 }
 
@@ -99,8 +98,8 @@ bool isValidLightKeyWithinSection(uint8_t sectionId, uint8_t lightKeyCode) {
     return false;
   if (lightId < lightingNormalLightsInSection[sectionId])
     return true;
-  if ((lightId >= LIGHTING_FLICKER_LIGHT_BASE)
-    && (lightId - LIGHTING_FLICKER_LIGHT_BASE) < lightingFlickerLightsInSection[sectionId])
+  if ((lightId == LIGHTING_FLICKER_LIGHT_ID)
+    && lightingHasFlickerLightInSection[sectionId])
     return true;
   return false;
 }
@@ -149,10 +148,9 @@ void sendCommand(uint8_t mainCmd, uint8_t subCmd, uint8_t param) {
 void flashFeedbackLED(RGBColour colour) {
   feedbackLED.flash(
     colour,
-    FEEDBACK_FLASH_COUNT,
-    FEEDBACK_FLASH_OFF_TIME,
-    FEEDBACK_FLASH_ON_TIME,
-    FEEDBACK_FLASH_PAUSE_TIME
+    FEEDBACK_LED_FLASH_COUNT,
+    FEEDBACK_LED_FLASH_OFF_TIME,
+    FEEDBACK_LED_FLASH_ON_TIME
   );
 }
 
