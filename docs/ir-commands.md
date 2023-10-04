@@ -18,7 +18,7 @@ The handset key presses for the commands are as follows:
 
 | Command Type | Command | 1st key | 2nd key |
 |:-------------|:--------|:--------|:--------|
-| 1 | Toggle given light in given section on & off | `1`...`9` (Section code) | `1`...`9` (Normal light code) _or_ `*` or `#` (Flicker light code) |
+| 1 | Toggle given light in given section on & off | `1`...`9` (Section code) | `1`...`9` (Normal light code) _or_ `#` (Flicker light code) |
 | 1 | Toggle all lights in given section on & off| `1`...`9` (Section code) | `0` |
 | 1 | Toggle all lights on and off | `0` | `OK` or `0` |
 | 1 | Toggle all normal lights on and off | `0` | `*` |
@@ -43,9 +43,9 @@ The following table lists the commands and the format of the two data bytes that
 |:--------|:----------------|:---------------|:----------|
 | Toggle given light in given section on & off | 1 | 1 | High nybble: 0..8, 0xE, 0xF (Light ID), Low nybble: 0..8 (Section ID) |
 | Toggle all lights in given section on & off | 1 | 2 | 0..8 (Section ID) |
-| Toggle all lights on and off | 1 | 3 | 1 |
-| Toggle all normal lights on and off | 1 | 3 | 2 |
-| Toggle all flicker lights on and off | 1 | 3 | 3 |
+| Toggle all normal lights on and off | 1 | 3 | 1 |
+| Toggle all flicker lights on and off | 1 | 3 | 2 |
+| Toggle all lights on and off | 1 | 3 | 3 |
 | Toggle a given dual state feature or activate a given single state feature | 2 | 1 | 0..8 (Feature ID) |
 | Reset all dual state features | 2 | 2 | _N/a_ |
 | Switch ambient lighting on to full brightness | 3 | 1 | 0xFF |
@@ -58,5 +58,6 @@ The following table lists the commands and the format of the two data bytes that
 
 Notes:
 
-1. Section, normal light, feature and program codes that use handset keys `1` to `9` map onto an ID that is one less than the numeral on the handset key, e.g key `4` represents command ID 3. The `*` and `#` flicker light codes represent command codes 0xF & 0xE respectively.
-2. Where _N/a_ appears in the table it means that the value is ignored and can be anything. Zero is usually used, but don't assume that it is.
+1. Section, normal light, feature and program codes that use handset keys `1` to `9` map onto an ID that is one less than the numeral on the handset key, e.g key `4` represents command ID 3. The and `#` flicker light key represents command code 0xF.
+2. The parameter of the command to turn all lights off is calculated by ORing together the parameters of the commands to turn off normal lights and to turn off flicker lights. I.e. 0b01 | 0b10 = 0b11 (1 | 2 = 3).
+3. Where _N/a_ appears in the table it means that the value is ignored and can be anything. Zero is usually used, but don't assume that it is.
